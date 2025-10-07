@@ -1,0 +1,29 @@
+{
+    "name": "cozy-mode/cozy-mode",
+    "description": "Transform any WordPress post into a distraction-free reading experience with optimal typography settings",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Cozy Mode Team",
+            "email": "team@cozymode.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "CozyMode\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs": "phpcs --standard=WordPress src/",
+        "cs-fix": "phpcbf --standard=WordPress src/"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

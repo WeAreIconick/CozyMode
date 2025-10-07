@@ -1,0 +1,766 @@
+/**
+ * Cozy Mode CSS
+ * Research-backed typography for optimal reading experience
+ * 66 characters per line, 1.5 line height, 18px font size baseline
+ */
+
+/* CSS Custom Properties for easy customization */
+:root {
+	--cozy-bg: #fefefe;
+	--cozy-text: #333333;
+	--cozy-width: 650px;           /* ~66 characters */
+	--cozy-font-size: 18px;        /* Optimal baseline */
+	--cozy-line-height: 1.6;       /* 1.5-1.6 range */
+	--cozy-font-family: Georgia, "Times New Roman", serif;
+	--cozy-heading-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	--cozy-paragraph-spacing: 1.5em;
+	--cozy-padding-desktop: 60px 40px;
+	--cozy-padding-mobile: 40px 20px;
+	--cozy-border-radius: 8px;
+	--cozy-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	--cozy-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	--cozy-transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	--cozy-transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	--cozy-ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	--cozy-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Dark mode variables */
+.cozy-mode-dark {
+	--cozy-bg: #1e1e1e;
+	--cozy-text: #e0e0e0;
+	--cozy-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode mobile banner */
+@media (max-width: 768px) {
+	.cozy-mode-dark .cozy-mode-button-container {
+		background: rgba(30, 30, 30, 0.95);
+		border-top-color: rgba(255, 255, 255, 0.1);
+	}
+}
+
+/* Screen reader text */
+.screen-reader-text {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+/* Cozy Mode Button - Floating Design */
+.cozy-mode-button-container {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
+	pointer-events: none;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	animation: cozyButtonEntrance 0.6s var(--cozy-ease-out) 0.3s both;
+}
+
+/* Button entrance animation */
+@keyframes cozyButtonEntrance {
+	0% {
+		opacity: 0;
+		transform: translateY(20px) scale(0.8);
+	}
+	50% {
+		opacity: 0.8;
+		transform: translateY(-5px) scale(1.05);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+/* Subtle floating animation */
+@keyframes cozyButtonFloat {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-3px);
+	}
+}
+
+.cozy-mode-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 56px;
+	background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+	color: white;
+	border: none;
+	border-radius: 50%;
+	font-size: 24px;
+	cursor: pointer;
+	transition: var(--cozy-transition);
+	text-decoration: none;
+	pointer-events: auto;
+	box-shadow: 0 4px 12px rgba(0, 115, 170, 0.3);
+	backdrop-filter: blur(10px);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Ripple effect */
+.cozy-mode-toggle::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.3);
+	transform: translate(-50%, -50%);
+	transition: width 0.6s, height 0.6s;
+}
+
+.cozy-mode-toggle:hover {
+	background: linear-gradient(135deg, #005a87 0%, #004066 100%);
+	transform: translateY(-3px) scale(1.08);
+	box-shadow: 0 8px 25px rgba(0, 115, 170, 0.5);
+	animation: cozyButtonFloat 2s ease-in-out infinite;
+}
+
+.cozy-mode-toggle:hover::before {
+	width: 120px;
+	height: 120px;
+}
+
+.cozy-mode-toggle:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.cozy-mode-toggle:active {
+	transform: translateY(-1px) scale(1.02);
+	transition: var(--cozy-transition-fast);
+}
+
+.cozy-mode-icon {
+	font-size: 24px;
+	line-height: 1;
+}
+
+/* Modal Overlay */
+.cozy-mode-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 999999;
+	opacity: 0;
+	visibility: hidden;
+	transition: var(--cozy-transition-slow);
+	backdrop-filter: blur(0px);
+}
+
+.cozy-mode-modal.active {
+	opacity: 1;
+	visibility: visible;
+	backdrop-filter: blur(8px);
+}
+
+/* Modal entrance animation */
+.cozy-mode-modal.active .cozy-mode-container {
+	animation: cozyModalSlideIn 0.5s var(--cozy-ease-out) both;
+}
+
+@keyframes cozyModalSlideIn {
+	0% {
+		opacity: 0;
+		transform: translateY(30px) scale(0.95);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+.cozy-mode-backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+	cursor: pointer;
+	transition: var(--cozy-transition);
+}
+
+.cozy-mode-backdrop:hover {
+	background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.cozy-mode-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+/* Modal Content */
+.cozy-mode-content {
+	background: var(--cozy-bg);
+	border-radius: var(--cozy-border-radius);
+	box-shadow: var(--cozy-shadow);
+	max-width: var(--cozy-width);
+	width: 100%;
+	max-height: 90vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Header */
+.cozy-mode-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px 30px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	background: var(--cozy-bg);
+	position: relative;
+}
+
+.cozy-mode-title {
+	margin: 0;
+	font-family: var(--cozy-heading-font);
+	font-size: 24px;
+	font-weight: 600;
+	color: var(--cozy-text);
+	max-width: 140%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cozy-mode-close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	background: #ffffff;
+	border: 2px solid #d63638;
+	font-size: 24px;
+	color: #d63638;
+	cursor: pointer;
+	padding: 10px;
+	border-radius: 8px;
+	transition: var(--cozy-transition);
+	line-height: 1;
+	width: 44px;
+	height: 44px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 1001;
+}
+
+.cozy-mode-close:hover {
+	background: #d63638;
+	border-color: #d63638;
+	transform: scale(1.1);
+	color: #ffffff;
+	box-shadow: 0 6px 16px rgba(214, 54, 56, 0.3);
+}
+
+.cozy-mode-close:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Article Content */
+.cozy-mode-article {
+	flex: 1;
+	overflow-y: auto;
+	padding: var(--cozy-padding-desktop);
+	font-family: var(--cozy-font-family);
+	font-size: var(--cozy-font-size);
+	line-height: var(--cozy-line-height);
+	color: var(--cozy-text);
+	background: var(--cozy-bg);
+	animation: cozyContentFadeIn 0.6s var(--cozy-ease-out) 0.2s both;
+}
+
+/* Content fade-in animation */
+@keyframes cozyContentFadeIn {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Typography Reset and Optimization */
+.cozy-mode-article * {
+	box-sizing: border-box;
+}
+
+.cozy-mode-article h1,
+.cozy-mode-article h2,
+.cozy-mode-article h3,
+.cozy-mode-article h4,
+.cozy-mode-article h5,
+.cozy-mode-article h6 {
+	font-family: var(--cozy-heading-font);
+	font-weight: 600;
+	line-height: 1.3;
+	margin: 1.5em 0 0.5em 0;
+	color: var(--cozy-text);
+}
+
+.cozy-mode-article h1 {
+	font-size: 2em;
+	margin-top: 0;
+}
+
+.cozy-mode-article h2 {
+	font-size: 1.5em;
+}
+
+.cozy-mode-article h3 {
+	font-size: 1.25em;
+}
+
+.cozy-mode-article h4 {
+	font-size: 1.1em;
+}
+
+.cozy-mode-article h5,
+.cozy-mode-article h6 {
+	font-size: 1em;
+}
+
+.cozy-mode-article p {
+	margin: 0 0 var(--cozy-paragraph-spacing) 0;
+	text-align: left;
+}
+
+.cozy-mode-article p:last-child {
+	margin-bottom: 0;
+}
+
+.cozy-mode-article a {
+	color: #0066cc;
+	text-decoration: underline;
+	transition: var(--cozy-transition);
+}
+
+.cozy-mode-article a:hover {
+	color: #004499;
+}
+
+.cozy-mode-article a:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.cozy-mode-article img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
+	margin: 1em 0;
+}
+
+.cozy-mode-article blockquote {
+	margin: 1.5em 0;
+	padding: 1em 1.5em;
+	border-left: 4px solid #0073aa;
+	background: rgba(0, 115, 170, 0.05);
+	font-style: italic;
+}
+
+.cozy-mode-article ul,
+.cozy-mode-article ol {
+	margin: 1em 0;
+	padding-left: 2em;
+}
+
+.cozy-mode-article li {
+	margin: 0.5em 0;
+}
+
+.cozy-mode-article code {
+	background: rgba(0, 0, 0, 0.1);
+	padding: 2px 4px;
+	border-radius: 3px;
+	font-family: "Courier New", monospace;
+	font-size: 0.9em;
+}
+
+.cozy-mode-article pre {
+	background: rgba(0, 0, 0, 0.05);
+	padding: 1em;
+	border-radius: 4px;
+	overflow-x: auto;
+	margin: 1em 0;
+}
+
+.cozy-mode-article pre code {
+	background: none;
+	padding: 0;
+}
+
+/* Controls */
+.cozy-mode-controls {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+	padding: 20px 30px;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	background: var(--cozy-bg);
+	animation: cozyControlsSlideUp 0.5s var(--cozy-ease-out) 0.4s both;
+}
+
+/* Controls slide-up animation */
+@keyframes cozyControlsSlideUp {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.cozy-mode-control {
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	padding: 8px 12px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: var(--cozy-transition);
+	color: var(--cozy-text);
+	min-width: 40px;
+	position: relative;
+	overflow: hidden;
+	backdrop-filter: blur(10px);
+}
+
+.cozy-mode-control::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+	transition: left 0.5s;
+}
+
+.cozy-mode-control:hover {
+	background: linear-gradient(135deg, rgba(0, 115, 170, 0.1) 0%, rgba(0, 115, 170, 0.05) 100%);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 115, 170, 0.2);
+}
+
+.cozy-mode-control:hover::before {
+	left: 100%;
+}
+
+.cozy-mode-control:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.cozy-mode-control:active {
+	transform: translateY(0) scale(0.95);
+	transition: var(--cozy-transition-fast);
+}
+
+.cozy-mode-control.active {
+	background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+	color: white;
+	border-color: #0073aa;
+	box-shadow: 0 4px 12px rgba(0, 115, 170, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	:root {
+		--cozy-font-size: 16px;
+		--cozy-line-height: 1.5;
+		--cozy-padding-desktop: var(--cozy-padding-mobile);
+	}
+
+	/* Mobile Banner Button */
+	.cozy-mode-button-container {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		background: rgba(255, 255, 255, 0.95);
+		backdrop-filter: blur(10px);
+		border-top: 1px solid rgba(0, 0, 0, 0.1);
+		padding: 12px 20px;
+		z-index: 1000;
+		pointer-events: none;
+		box-sizing: border-box;
+		margin: 0;
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
+		animation: cozyMobileBannerSlideUp 0.6s var(--cozy-ease-out) 0.3s both;
+	}
+
+	/* Mobile banner slide-up animation */
+	@keyframes cozyMobileBannerSlideUp {
+		0% {
+			opacity: 0;
+			transform: translateY(100%);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.cozy-mode-toggle {
+		width: 100%;
+		max-width: 100%;
+		height: 48px;
+		border-radius: 8px;
+		font-size: 20px;
+		background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+		box-shadow: 0 2px 8px rgba(0, 115, 170, 0.2);
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.cozy-mode-toggle::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+		transition: left 0.5s;
+	}
+
+	.cozy-mode-toggle:hover::before {
+		left: 100%;
+	}
+
+	.cozy-mode-toggle:hover {
+		transform: none;
+		background: #005a87;
+	}
+
+	.cozy-mode-toggle:active {
+		transform: scale(0.98);
+	}
+
+	.cozy-mode-icon {
+		font-size: 20px;
+	}
+
+	.cozy-mode-container {
+		padding: 10px;
+	}
+
+	.cozy-mode-content {
+		max-height: 95vh;
+	}
+
+	.cozy-mode-header {
+		padding: 15px 20px;
+	}
+
+	.cozy-mode-title {
+		font-size: 20px;
+	}
+
+	.cozy-mode-article {
+		padding: var(--cozy-padding-mobile);
+	}
+
+	.cozy-mode-controls {
+		padding: 15px 20px;
+		gap: 8px;
+	}
+
+	.cozy-mode-control {
+		padding: 6px 10px;
+		font-size: 14px;
+		min-width: 36px;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+	:root {
+		--cozy-font-size: 17px;
+	}
+}
+
+@media (min-width: 1024px) {
+	:root {
+		--cozy-font-size: 18px;
+	}
+}
+
+@media (min-width: 1440px) {
+	:root {
+		--cozy-font-size: 20px;
+		--cozy-width: 700px;
+	}
+}
+
+/* Body scroll prevention when modal is active */
+body.cozy-mode-active {
+	overflow: hidden !important;
+}
+
+/* Focus trap styles */
+.cozy-mode-modal *:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	:root {
+		--cozy-bg: #ffffff;
+		--cozy-text: #000000;
+	}
+	
+	.cozy-mode-dark {
+		--cozy-bg: #000000;
+		--cozy-text: #ffffff;
+	}
+}
+
+/* Loading spinner */
+.cozy-mode-loading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 40px 20px;
+	text-align: center;
+}
+
+.cozy-mode-spinner {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border: 4px solid rgba(0, 115, 170, 0.2);
+	border-radius: 50%;
+	border-top-color: #0073aa;
+	animation: cozySpinner 1s ease-in-out infinite;
+	margin-bottom: 20px;
+}
+
+@keyframes cozySpinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Button loading state */
+.cozy-mode-toggle.loading {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.cozy-mode-toggle.loading .cozy-mode-icon {
+	animation: cozyPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes cozyPulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+/* Error states */
+.cozy-mode-error {
+	text-align: center;
+	padding: 40px 20px;
+	color: var(--cozy-text);
+}
+
+.cozy-mode-retry-button {
+	background: #0073aa;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-top: 20px;
+	transition: var(--cozy-transition);
+}
+
+.cozy-mode-retry-button:hover {
+	background: #005a87;
+}
+
+/* Print button enhancement */
+.cozy-mode-control.cozy-mode-print {
+	position: relative;
+}
+
+.cozy-mode-control.cozy-mode-print:hover::after {
+	content: 'Print Article';
+	position: absolute;
+	bottom: -30px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(0, 0, 0, 0.8);
+	color: white;
+	padding: 4px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	white-space: nowrap;
+	z-index: 1000;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--cozy-transition: none;
+		--cozy-transition-fast: none;
+		--cozy-transition-slow: none;
+	}
+	
+	.cozy-mode-modal,
+	.cozy-mode-toggle,
+	.cozy-mode-control,
+	.cozy-mode-button-container {
+		transition: none;
+		animation: none;
+	}
+	
+	.cozy-mode-loading {
+		animation: none;
+		border-top-color: white;
+	}
+}
