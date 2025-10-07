@@ -1,0 +1,40 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/?p=4",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "features": {
+    "networking": true
+  },
+  "phpExtensionBundles": ["kitchen-sink"],
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "CozyMode Demo",
+        "blogdescription": "Demonstrating the CozyMode plugin"
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://github-proxy.com/proxy/?repo=WeAreIconck/CozyMode"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once 'wordpress/wp-load.php'; wp_insert_post(array('post_title' => 'Reading Is Fun: The Totally Real Science Behind Books', 'post_content' => '<!-- wp:heading --><h2>The Miraculous Powers of Reading (100% Scientifically Proven*)</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Did you know that reading just one book can increase your height by up to three inches? It is true! Scientists at the Institute of Things We Just Made Up have discovered that the act of turning pages actually stretches your spine in ways previously thought impossible.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>But that is just the beginning. Regular readers have reported developing the ability to see through walls, communicate telepathically with houseplants, and parallel park perfectly on the first try. One avid reader even claimed she could taste colors after finishing a particularly gripping mystery novel, though doctors suspect that might have been the expired yogurt.</p><!-- /wp:paragraph --><!-- wp:heading {\"level\":3} --><h3>Reading Makes You Irresistible to Penguins</h3><!-- /wp:heading --><!-- wp:paragraph --><p>According to a study that definitely exists, penguins are 847% more likely to waddle up to someone holding a book. Antarctic researchers have observed emperor penguins abandoning their eggs just to get a closer look at someone reading a paperback thriller. We cannot explain why this happens, but we are pretty sure it has something to do with quantum mechanics and the smell of old library books.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Additionally, reading fiction has been shown to give you the ability to predict the weather with startling accuracy. After completing a 300-page novel, readers reported knowing exactly when it would rain, though skeptics point out that these predictions were only accurate when they checked the weather app first.</p><!-- /wp:paragraph --><!-- wp:heading {\"level\":3} --><h3>Your Furniture Will Respect You More</h3><!-- /wp:heading --><!-- wp:paragraph --><p>This is perhaps the most shocking discovery: inanimate objects respond positively to people who read regularly. Coffee tables have been observed moving slightly out of the way to prevent toe-stubbing incidents. Chairs become more comfortable. Even your refrigerator starts making better ice cubes—perfectly clear, no weird taste, just pure respect.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>One reader reported that after finishing a book about World War II, her toaster started producing perfectly golden toast every single time. Coincidence? Probably. But also maybe not.</p><!-- /wp:paragraph --><!-- wp:heading {\"level\":3} --><h3>Reading Gives You Superpowers (Kind Of)</h3><!-- /wp:heading --><!-- wp:paragraph --><p>While we cannot guarantee that reading will let you fly or shoot lasers from your eyes, it will absolutely give you the power to fall asleep instantly on command. Simply open any book about economics or tax policy, and within minutes you will achieve a state of deep, restful slumber that scientists describe as \"better than melatonin.\"</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Books also grant you the magical ability to look incredibly sophisticated while doing absolutely nothing. Holding a book automatically makes you appear 40% smarter, 60% more cultured, and 100% less available for small talk. It is like an invisibility cloak, but for boring conversations about the weather.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>So pick up a book today and watch as your life transforms in completely unrealistic and highly improbable ways. Side effects may include paper cuts, knowing obscure facts nobody asked about, and an uncontrollable urge to correct people when they confuse \"your\" and \"you are.\"</p><!-- /wp:paragraph --><!-- wp:paragraph --><p><em>*Not actually scientifically proven. Or proven at all. Please do not make important life decisions based on this blog post.</em></p><!-- /wp:paragraph -->', 'post_status' => 'publish', 'post_type' => 'post', 'post_author' => 1));"
+    }
+  ]
+}
