@@ -39,7 +39,6 @@
 			this.isDarkMode = false;
 			this.retryCount = 0;
 			this.maxRetries = 3;
-			this.modalClickHandler = null;
 			
 			this.init();
 		}
@@ -102,12 +101,17 @@
 				}
 			});
 
-			// Backdrop click - improved to handle clicks outside modal content
+			// Click overlay - handle clicks outside modal content
 			document.addEventListener('click', (e) => {
-				if (!this.isActive) return;
+				if (!this.isActive || !this.modal) return;
 				
-				// Check if click is on backdrop
-				if (e.target.classList.contains('cozy-mode-backdrop')) {
+				// Don't close if clicking on the toggle button
+				if (e.target.closest('.cozy-mode-toggle')) {
+					return;
+				}
+				
+				// Check if click is on the click overlay (outside content)
+				if (e.target.classList.contains('cozy-mode-click-overlay')) {
 					this.closeModal();
 				}
 			});
@@ -208,7 +212,6 @@
 			this.modal = document.getElementById('cozy-mode-modal');
 			this.backdrop = this.modal?.querySelector('.cozy-mode-backdrop');
 			this.container = this.modal?.querySelector('.cozy-mode-container');
-			this.title = this.modal?.querySelector('#cozy-mode-title');
 			this.content = this.modal?.querySelector('.cozy-mode-article');
 			this.loading = this.modal?.querySelector('.cozy-mode-loading');
 			this.closeButton = this.modal?.querySelector('.cozy-mode-close');
@@ -395,10 +398,7 @@
 		}
 
 		populateModal(article) {
-			if (!this.title || !this.content) return;
-
-			// Set title safely
-			this.title.textContent = article.title || cozyMode.strings.readingMode;
+			if (!this.content) return;
 
 			// Set content safely - use textContent for security
 			// Note: Readability.js already sanitizes content, but we'll be extra safe
@@ -432,28 +432,11 @@
 			this.modal.removeAttribute('hidden');
 			this.modal.classList.add('active');
 
-			// Add click listener to modal for outside clicks
-			this.modalClickHandler = this.handleModalClick.bind(this);
-			this.modal.addEventListener('click', this.modalClickHandler);
-
 			this.isActive = true;
-		}
-
-		handleModalClick(e) {
-			// If click is directly on the modal (not on content), close it
-			if (e.target === this.modal) {
-				this.closeModal();
-			}
 		}
 
 		closeModal() {
 			if (!this.modal || !this.isActive) return;
-
-			// Remove click listener
-			if (this.modalClickHandler) {
-				this.modal.removeEventListener('click', this.modalClickHandler);
-				this.modalClickHandler = null;
-			}
 
 			// Hide modal
 			this.modal.classList.remove('active');
@@ -471,9 +454,7 @@
 		}
 
 		showError(message = null) {
-			if (!this.title || !this.content) return;
-
-			this.title.textContent = cozyMode.strings.readingMode;
+			if (!this.content) return;
 			
 			// Create error message safely
 			const errorDiv = document.createElement('div');
@@ -514,15 +495,14 @@
 				<!DOCTYPE html>
 				<html>
 				<head>
-					<title>${this.title?.textContent || 'Article'}</title>
+					<title>Article</title>
 					<style>
-						body { font-family: Georgia, serif; line-height: 1.6; max-width: 650px; margin: 0 auto; padding: 20px; }
+						body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; max-width: 650px; margin: 0 auto; padding: 20px; }
 						h1, h2, h3 { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
 						@media print { body { margin: 0; padding: 0; } }
 					</style>
 				</head>
 				<body>
-					<h1>${this.title?.textContent || 'Article'}</h1>
 					${this.content.innerHTML}
 				</body>
 				</html>
