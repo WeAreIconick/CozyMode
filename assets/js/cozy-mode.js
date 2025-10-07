@@ -101,9 +101,13 @@
 				}
 			});
 
-			// Backdrop click
+			// Backdrop click - improved to handle clicks outside modal content
 			document.addEventListener('click', (e) => {
-				if (e.target.classList.contains('cozy-mode-backdrop')) {
+				if (!this.isActive) return;
+				
+				// Check if click is on backdrop or outside the modal content
+				if (e.target.classList.contains('cozy-mode-backdrop') || 
+					(e.target === this.modal && !this.container.contains(e.target))) {
 					this.closeModal();
 				}
 			});

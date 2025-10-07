@@ -148,11 +148,11 @@ class Cozy_Mode_Main {
 		<div id="cozy-mode-modal" class="cozy-mode-modal" role="dialog" aria-modal="true" aria-labelledby="cozy-mode-title" hidden>
 			<div class="cozy-mode-backdrop" aria-hidden="true"></div>
 			<div class="cozy-mode-container">
+				<button type="button" class="cozy-mode-close" aria-label="<?php esc_attr_e( 'Close Cozy Mode', 'cozy-mode' ); ?>">
+					<span aria-hidden="true">&times;</span>
+				</button>
 				<div class="cozy-mode-header">
 					<h1 id="cozy-mode-title" class="cozy-mode-title"><?php esc_html_e( 'Reading Mode', 'cozy-mode' ); ?></h1>
-					<button type="button" class="cozy-mode-close" aria-label="<?php esc_attr_e( 'Close Cozy Mode', 'cozy-mode' ); ?>">
-						<span aria-hidden="true">&times;</span>
-					</button>
 				</div>
 				<div class="cozy-mode-content">
 					<div class="cozy-mode-article">
