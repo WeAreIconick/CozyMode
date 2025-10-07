@@ -39,6 +39,7 @@
 			this.isDarkMode = false;
 			this.retryCount = 0;
 			this.maxRetries = 3;
+			this.modalClickHandler = null;
 			
 			this.init();
 		}
@@ -105,9 +106,8 @@
 			document.addEventListener('click', (e) => {
 				if (!this.isActive) return;
 				
-				// Check if click is on backdrop or outside the modal content
-				if (e.target.classList.contains('cozy-mode-backdrop') || 
-					(e.target === this.modal && !this.container.contains(e.target))) {
+				// Check if click is on backdrop
+				if (e.target.classList.contains('cozy-mode-backdrop')) {
 					this.closeModal();
 				}
 			});
@@ -432,11 +432,28 @@
 			this.modal.removeAttribute('hidden');
 			this.modal.classList.add('active');
 
+			// Add click listener to modal for outside clicks
+			this.modalClickHandler = this.handleModalClick.bind(this);
+			this.modal.addEventListener('click', this.modalClickHandler);
+
 			this.isActive = true;
+		}
+
+		handleModalClick(e) {
+			// If click is directly on the modal (not on content), close it
+			if (e.target === this.modal) {
+				this.closeModal();
+			}
 		}
 
 		closeModal() {
 			if (!this.modal || !this.isActive) return;
+
+			// Remove click listener
+			if (this.modalClickHandler) {
+				this.modal.removeEventListener('click', this.modalClickHandler);
+				this.modalClickHandler = null;
+			}
 
 			// Hide modal
 			this.modal.classList.remove('active');
