@@ -420,6 +420,9 @@
 
 			// Apply current preferences
 			this.applyPreferences();
+			
+			// Remove top margin from first heading
+			this.removeFirstHeadingTopMargin();
 		}
 
 		showModal() {
@@ -559,6 +562,16 @@
 		applyPreferences() {
 			this.applyFontSize();
 			this.applyTheme();
+		}
+
+		removeFirstHeadingTopMargin() {
+			if (!this.content) return;
+			
+			// Find the first heading (h1, h2, h3, h4, h5, or h6)
+			const firstHeading = this.content.querySelector('h1, h2, h3, h4, h5, h6');
+			if (firstHeading) {
+				firstHeading.classList.add('first-heading');
+			}
 		}
 	}
 
