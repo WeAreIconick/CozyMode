@@ -32,11 +32,36 @@
 	--cozy-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Dark mode styles */
+.cozy-mode-dark .cozy-mode-toggle {
+	background: #2d2d2d;
+	color: #ffffff;
+	border-color: #404040;
+}
+
+.cozy-mode-dark .cozy-mode-toggle:hover {
+	background: #404040;
+	border-color: #0073aa;
+	color: #0073aa;
+}
+
 /* Dark mode mobile banner */
 @media (max-width: 768px) {
 	.cozy-mode-dark .cozy-mode-button-container {
 		background: rgba(30, 30, 30, 0.95);
-		border-top-color: rgba(255, 255, 255, 0.1);
+		border-top-color: rgba(255, 255, 255, 0.08);
+	}
+	
+	.cozy-mode-dark .cozy-mode-toggle {
+		background: #2d2d2d;
+		color: #ffffff;
+		border-color: #404040;
+	}
+	
+	.cozy-mode-dark .cozy-mode-toggle:hover {
+		background: #404040;
+		border-color: #0073aa;
+		color: #0073aa;
 	}
 }
 
@@ -54,104 +79,72 @@
 	word-wrap: normal !important;
 }
 
-/* Cozy Mode Button - Floating Design */
+/* Cozy Mode Button - Simple Floating Design */
 .cozy-mode-button-container {
 	position: fixed;
-	bottom: 20px;
-	right: 20px;
+	bottom: 24px;
+	right: 24px;
 	z-index: 1000;
 	pointer-events: none;
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	animation: cozyButtonEntrance 0.6s var(--cozy-ease-out) 0.3s both;
+	animation: cozyButtonEntrance 0.4s ease-out 0.2s both;
 }
 
-/* Button entrance animation */
+/* Button entrance animation - simplified */
 @keyframes cozyButtonEntrance {
 	0% {
 		opacity: 0;
-		transform: translateY(20px) scale(0.8);
-	}
-	50% {
-		opacity: 0.8;
-		transform: translateY(-5px) scale(1.05);
+		transform: translateY(10px);
 	}
 	100% {
 		opacity: 1;
-		transform: translateY(0) scale(1);
-	}
-}
-
-/* Subtle floating animation */
-@keyframes cozyButtonFloat {
-	0%, 100% {
 		transform: translateY(0);
 	}
-	50% {
-		transform: translateY(-3px);
-	}
 }
 
+/* Simplified button styles */
 .cozy-mode-toggle {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 56px;
-	height: 56px;
-	background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
-	color: white;
-	border: none;
-	border-radius: 50%;
-	font-size: 24px;
+	width: 48px;
+	height: 48px;
+	background: #ffffff;
+	color: #333333;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	font-size: 18px;
 	cursor: pointer;
-	transition: var(--cozy-transition);
+	transition: all 0.2s ease;
 	text-decoration: none;
 	pointer-events: auto;
-	box-shadow: 0 4px 12px rgba(0, 115, 170, 0.3);
-	backdrop-filter: blur(10px);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	position: relative;
-	overflow: hidden;
 }
 
-/* Ripple effect */
-.cozy-mode-toggle::before {
-	content: '';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.3);
-	transform: translate(-50%, -50%);
-	transition: width 0.6s, height 0.6s;
-}
-
+/* Simple hover effect */
 .cozy-mode-toggle:hover {
-	background: linear-gradient(135deg, #005a87 0%, #004066 100%);
-	transform: translateY(-3px) scale(1.08);
-	box-shadow: 0 8px 25px rgba(0, 115, 170, 0.5);
-	animation: cozyButtonFloat 2s ease-in-out infinite;
-}
-
-.cozy-mode-toggle:hover::before {
-	width: 120px;
-	height: 120px;
+	background: #f8f9fa;
+	border-color: #0073aa;
+	color: #0073aa;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .cozy-mode-toggle:focus {
 	outline: none;
-	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 0 2px #0073aa;
 }
 
 .cozy-mode-toggle:active {
-	transform: translateY(-1px) scale(1.02);
-	transition: var(--cozy-transition-fast);
+	transform: translateY(0);
+	transition: all 0.1s ease;
 }
 
 .cozy-mode-icon {
-	font-size: 24px;
+	font-size: 18px;
 	line-height: 1;
 }
 
@@ -509,7 +502,7 @@
 		--cozy-padding-desktop: var(--cozy-padding-mobile);
 	}
 
-	/* Mobile Banner Button */
+	/* Mobile Banner Button - Simplified */
 	.cozy-mode-button-container {
 		position: fixed;
 		bottom: 0;
@@ -517,16 +510,14 @@
 		right: 0;
 		width: 100%;
 		background: rgba(255, 255, 255, 0.95);
-		backdrop-filter: blur(10px);
-		border-top: 1px solid rgba(0, 0, 0, 0.1);
-		padding: 12px 20px;
+		backdrop-filter: blur(8px);
+		border-top: 1px solid rgba(0, 0, 0, 0.08);
+		padding: 16px 20px;
 		z-index: 1000;
 		pointer-events: none;
 		box-sizing: border-box;
 		margin: 0;
-		transform: translateZ(0);
-		-webkit-transform: translateZ(0);
-		animation: cozyMobileBannerSlideUp 0.6s var(--cozy-ease-out) 0.3s both;
+		animation: cozyMobileBannerSlideUp 0.4s ease-out 0.2s both;
 	}
 
 	/* Mobile banner slide-up animation */
@@ -544,44 +535,31 @@
 	.cozy-mode-toggle {
 		width: 100%;
 		max-width: 100%;
-		height: 48px;
-		border-radius: 8px;
-		font-size: 20px;
-		background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
-		box-shadow: 0 2px 8px rgba(0, 115, 170, 0.2);
+		height: 44px;
+		border-radius: 6px;
+		font-size: 16px;
+		background: #ffffff;
+		color: #333333;
+		border: 1px solid #e0e0e0;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
 		position: relative;
-		overflow: hidden;
-	}
-
-	.cozy-mode-toggle::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-		transition: left 0.5s;
-	}
-
-	.cozy-mode-toggle:hover::before {
-		left: 100%;
 	}
 
 	.cozy-mode-toggle:hover {
-		transform: none;
-		background: #005a87;
+		background: #f8f9fa;
+		border-color: #0073aa;
+		color: #0073aa;
 	}
 
 	.cozy-mode-toggle:active {
-		transform: scale(0.98);
+		background: #f0f0f0;
 	}
 
 	.cozy-mode-icon {
-		font-size: 20px;
+		font-size: 16px;
 	}
 
 	.cozy-mode-container {

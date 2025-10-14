@@ -108,8 +108,8 @@ class CozyModeFrontend {
 	 * @since 1.0.0
 	 */
 	public function enqueue_assets() {
-		// Only load on singular posts/pages
-		if ( ! is_singular() ) {
+		// Only load on single post templates (not pages)
+		if ( ! is_single() ) {
 			return;
 		}
 
@@ -191,8 +191,8 @@ class CozyModeFrontend {
 			return $content;
 		}
 
-		// Only add button on singular posts/pages and main query
-		if ( ! is_singular() || ! is_main_query() ) {
+		// Only add button on single post templates and main query
+		if ( ! is_single() || ! is_main_query() ) {
 			return $content;
 		}
 
@@ -249,8 +249,8 @@ class CozyModeFrontend {
 	 * @since 1.0.0
 	 */
 	public function add_modal_html() {
-		// Only add modal on singular posts/pages
-		if ( ! is_singular() ) {
+		// Only add modal on single post templates
+		if ( ! is_single() ) {
 			return;
 		}
 

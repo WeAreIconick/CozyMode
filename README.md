@@ -50,7 +50,7 @@ composer require cozy-mode/cozy-mode
 ## 🎯 Usage
 
 ### For Users
-1. Navigate to any post or page
+1. Navigate to any blog post (not pages)
 2. Look for the 📖 button in the bottom-right corner (desktop) or bottom banner (mobile)
 3. Click to enter Cozy Mode
 4. Use the controls to adjust font size, toggle dark mode, or print

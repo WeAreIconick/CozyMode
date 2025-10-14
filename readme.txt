@@ -36,7 +36,7 @@ Cozy Mode transforms any WordPress post or page into a distraction-free reading 
 
 **How It Works:**
 
-1. Click the "Enter Cozy Mode" button on any post or page
+1. Click the "Enter Cozy Mode" button on any blog post
 2. Readability.js automatically extracts the main content
 3. Content displays in a modal overlay with optimal typography
 4. Use controls to adjust font size and toggle dark mode
@@ -55,7 +55,7 @@ Cozy Mode transforms any WordPress post or page into a distraction-free reading 
 
 1. Upload the `cozy-mode` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Visit any post or page to see the "Enter Cozy Mode" button
+3. Visit any blog post to see the "Enter Cozy Mode" button
 4. Click the button to experience distraction-free reading
 
 == Frequently Asked Questions ==
@@ -67,9 +67,8 @@ Yes! Cozy Mode works with any WordPress theme by overlaying content in a modal. 
 = What content types are supported? =
 
 Cozy Mode works with:
-* Standard WordPress posts and pages
+* Standard WordPress blog posts
 * Gutenberg block editor content
-* Custom post types
 * Posts with custom fields and meta data
 
 = Does it work on mobile devices? =
@@ -99,7 +98,7 @@ No, Cozy Mode doesn't affect SEO. It's purely a client-side reading enhancement 
 
 = Can I disable it on certain posts? =
 
-Currently, Cozy Mode appears on all singular posts and pages. Future versions may include options to disable on specific content types.
+Currently, Cozy Mode appears on all blog posts. Future versions may include options to disable on specific content types.
 
 = What browsers are supported? =
 
@@ -112,7 +111,7 @@ This includes Chrome 49+, Firefox 31+, Safari 9.1+, and Edge 16+.
 
 == Screenshots ==
 
-1. The "Enter Cozy Mode" button appears on posts and pages
+1. The "Enter Cozy Mode" button appears on blog posts
 2. Clicking opens a distraction-free reading experience
 3. Typography optimized for readability with 66 characters per line
 4. Dark mode toggle and font size controls

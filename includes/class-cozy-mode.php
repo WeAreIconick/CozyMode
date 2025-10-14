@@ -54,8 +54,8 @@ class Cozy_Mode_Main {
 	 * Enqueue CSS and JavaScript assets
 	 */
 	public function enqueue_assets() {
-		// Only load on singular posts/pages
-		if ( ! is_singular() ) {
+		// Only load on single post templates (not pages)
+		if ( ! is_single() ) {
 			return;
 		}
 
@@ -108,8 +108,8 @@ class Cozy_Mode_Main {
 	 * @return string Modified content.
 	 */
 	public function add_cozy_mode_button( $content ) {
-		// Only add button on singular posts/pages and main query
-		if ( ! is_singular() || ! is_main_query() ) {
+		// Only add button on single post templates and main query
+		if ( ! is_single() || ! is_main_query() ) {
 			return $content;
 		}
 
@@ -139,8 +139,8 @@ class Cozy_Mode_Main {
 	 * Add modal HTML to footer
 	 */
 	public function add_modal_html() {
-		// Only add modal on singular posts/pages
-		if ( ! is_singular() ) {
+		// Only add modal on single post templates
+		if ( ! is_single() ) {
 			return;
 		}
 

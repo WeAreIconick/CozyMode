@@ -293,12 +293,12 @@ class CacheManager {
 	 */
 	public function warm_up_cache( $post_ids = array() ) {
 		if ( empty( $post_ids ) ) {
-			// Get recent posts
-			$posts = get_posts( array(
-				'numberposts' => 10,
-				'post_status' => 'publish',
-				'post_type' => array( 'post', 'page' ),
-			) );
+		// Get recent posts (only posts, not pages)
+		$posts = get_posts( array(
+			'numberposts' => 10,
+			'post_status' => 'publish',
+			'post_type' => 'post',
+		) );
 			$post_ids = wp_list_pluck( $posts, 'ID' );
 		}
 
