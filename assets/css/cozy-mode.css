@@ -14,8 +14,8 @@
 	--cozy-font-family: Georgia, "Times New Roman", serif;
 	--cozy-heading-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 	--cozy-paragraph-spacing: 1.5em;
-	--cozy-padding-desktop: 60px 40px;
-	--cozy-padding-mobile: 40px 20px;
+	--cozy-padding-desktop: 40px;
+	--cozy-padding-mobile: 40px;
 	--cozy-border-radius: 8px;
 	--cozy-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 	--cozy-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -146,6 +146,14 @@
 .cozy-mode-icon {
 	font-size: 18px;
 	line-height: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.cozy-mode-icon svg {
+	width: 18px;
+	height: 18px;
 }
 
 /* Modal Overlay */
@@ -287,7 +295,7 @@
 .cozy-mode-article {
 	flex: 1;
 	overflow-y: auto;
-	padding: var(--cozy-padding-desktop);
+	padding: 40px;
 	font-family: var(--cozy-font-family);
 	font-size: var(--cozy-font-size);
 	line-height: var(--cozy-line-height);
@@ -324,6 +332,16 @@
 	line-height: 1.3;
 	margin: 1.5em 0 0.5em 0;
 	color: var(--cozy-text);
+}
+
+/* Remove top margin from first heading */
+.cozy-mode-article h1:first-child,
+.cozy-mode-article h2:first-child,
+.cozy-mode-article h3:first-child,
+.cozy-mode-article h4:first-child,
+.cozy-mode-article h5:first-child,
+.cozy-mode-article h6:first-child {
+	margin-top: 0;
 }
 
 .cozy-mode-article h1 {
@@ -499,7 +517,6 @@
 	:root {
 		--cozy-font-size: 16px;
 		--cozy-line-height: 1.5;
-		--cozy-padding-desktop: var(--cozy-padding-mobile);
 	}
 
 	/* Mobile Banner Button - Simplified */
@@ -561,6 +578,11 @@
 	.cozy-mode-icon {
 		font-size: 16px;
 	}
+	
+	.cozy-mode-icon svg {
+		width: 16px;
+		height: 16px;
+	}
 
 	.cozy-mode-container {
 		padding: 10px;
@@ -579,7 +601,7 @@
 	}
 
 	.cozy-mode-article {
-		padding: var(--cozy-padding-mobile);
+		padding: 40px;
 	}
 
 	.cozy-mode-controls {

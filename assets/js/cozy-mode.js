@@ -180,14 +180,14 @@
 				button.classList.add('loading');
 				const icon = button.querySelector('.cozy-mode-icon');
 				if (icon) {
-					icon.textContent = '⏳';
+					icon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 				}
 			} else {
 				button.disabled = false;
 				button.classList.remove('loading');
 				const icon = button.querySelector('.cozy-mode-icon');
 				if (icon) {
-					icon.textContent = '📖';
+					icon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6H20M4 12H20M4 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 				}
 			}
 		}
